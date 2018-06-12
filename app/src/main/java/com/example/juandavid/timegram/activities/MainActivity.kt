@@ -12,19 +12,27 @@ import RecyclerViewFragment
 
 class MainActivity : AppCompatActivity() {
 
+    val fragment = RecyclerViewFragment()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
         val transaction = supportFragmentManager.beginTransaction()
-        val fragment = RecyclerViewFragment()
+
         transaction.replace(R.id.sample_content_fragment, fragment)
         transaction.commit()
 
         fab.setOnClickListener { _ ->
             startActivity(Intent(this, EventActivity::class.java))
         }
+    }
+
+    override fun onResume() {
+        fragment.initDataset()
+        super.onResume()
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

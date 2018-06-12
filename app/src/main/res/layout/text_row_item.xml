@@ -21,7 +21,8 @@
         android:layout_gravity="center_horizontal"
         android:clickable="true"
         android:focusable="true"
-        android:foreground="?attr/selectableItemBackgroundBorderless">
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:id="@+id/card">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"

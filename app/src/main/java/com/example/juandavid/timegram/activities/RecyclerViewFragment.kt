@@ -27,8 +27,6 @@ class RecyclerViewFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Initialize dataset, this data would usually come from a local content provider or
-        // remote server.
         initDataset()
     }
 
@@ -101,11 +99,7 @@ class RecyclerViewFragment : Fragment() {
         super.onSaveInstanceState(savedInstanceState)
     }
 
-    /**
-     * Generates Strings for RecyclerView's adapter. This data would usually come
-     * from a local content provider or remote server.
-     */
-    private fun initDataset() {
+    fun initDataset() {
         AsyncRetrieve().execute()
     }
 
@@ -120,6 +114,5 @@ class RecyclerViewFragment : Fragment() {
         private val TAG = "RecyclerViewFragment"
         private val KEY_LAYOUT_MANAGER = "layoutManager"
         private val SPAN_COUNT = 2
-        private val DATASET_COUNT = 60
     }
 }

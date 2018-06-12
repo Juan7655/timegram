@@ -1,3 +1,4 @@
+import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
@@ -5,9 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-
+import android.widget.Toast
 import com.example.juandavid.timegram.R
 import com.example.juandavid.timegram.pojo.Event
+import com.shashank.sony.fancytoastlib.FancyToast
 
 /**
  * Provide views to RecyclerView with data from dataSet.
@@ -30,8 +32,11 @@ class CustomAdapter(private val dataSet: List<Event>) :
         val imgView: ImageView
 
         init {
-            // Define click listener for the ViewHolder's View.
-            v.setOnClickListener { Log.d(TAG, "Element $adapterPosition clicked.") }
+            v.findViewById<CardView>(R.id.card).setOnClickListener { FancyToast.makeText(v.context,
+                    "Element $adapterPosition clicked.",
+                    Toast.LENGTH_SHORT,
+                    FancyToast.INFO,
+                    false).show() }
             tvDate = v.findViewById(R.id.mtv)
             tvObjective = v.findViewById(R.id.title)
             tvDescr = v.findViewById(R.id.descr)
