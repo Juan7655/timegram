@@ -25,7 +25,7 @@ class EventActivity : AppCompatActivity() {
         calendar.setOnDateChangeListener { view, year, month, dayOfMonth ->
             dateString = dayOfMonth.toString() + "/" + (month + 1) + "/" + year
         }
-git
+
         button_cancel.setOnClickListener{_ -> finish() }
         button_save.setOnClickListener{view ->
 
