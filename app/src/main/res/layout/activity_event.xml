@@ -33,6 +33,7 @@
             android:orientation="vertical">
 
             <CalendarView
+                android:id="@+id/calendar"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.4" />
@@ -61,7 +62,6 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -93,7 +93,7 @@
                 android:text="@string/select_category" />
 
             <Spinner
-                android:id="@+id/spinner2"
+                android:id="@+id/spin_cat"
                 style="@style/Widget.AppCompat.Spinner.Underlined"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

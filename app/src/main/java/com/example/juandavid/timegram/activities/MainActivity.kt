@@ -1,4 +1,4 @@
-package com.example.juandavid.timegram
+package com.example.juandavid.timegram.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import com.example.juandavid.timegram.R
 import com.shashank.sony.fancytoastlib.FancyToast
 
 import kotlinx.android.synthetic.main.activity_main.*
@@ -23,7 +24,7 @@ class MainActivity : AppCompatActivity() {
                     Snackbar.LENGTH_LONG,
                     FancyToast.SUCCESS,
                     false).show()
-            startActivity(Intent(this, Event::class.java))
+            startActivity(Intent(this, EventActivity::class.java))
         }
     }
 
