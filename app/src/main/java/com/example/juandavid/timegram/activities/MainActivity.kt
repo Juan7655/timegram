@@ -18,12 +18,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener { view ->
-            FancyToast.makeText(view.context,
-                    "Item added successfully",
-                    Snackbar.LENGTH_LONG,
-                    FancyToast.SUCCESS,
-                    false).show()
+        fab.setOnClickListener { _ ->
             startActivity(Intent(this, EventActivity::class.java))
         }
     }

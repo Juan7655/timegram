@@ -1,16 +1,17 @@
 package com.example.juandavid.timegram.activities
 
-import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.util.Log
-import com.example.juandavid.timegram.R
-import com.example.juandavid.timegram.pojo.Category
-import com.example.juandavid.timegram.pojo.Event
-import kotlinx.android.synthetic.main.activity_event.*
-import com.example.juandavid.timegram.database.AppDatabase
+
 import android.os.AsyncTask
-
-
+import android.os.Bundle
+import android.support.design.widget.Snackbar
+import android.support.v7.app.AppCompatActivity
+import com.example.juandavid.timegram.R
+import com.example.juandavid.timegram.database.AppDatabase
+import com.example.juandavid.timegram.pojo.Event
+import com.shashank.sony.fancytoastlib.FancyToast
+import kotlinx.android.synthetic.main.activity_event.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class EventActivity : AppCompatActivity() {
@@ -19,15 +20,26 @@ class EventActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_event)
 
+        var dateString = SimpleDateFormat("dd/MM/yyyy").format(Date(calendar.date))
+
+        calendar.setOnDateChangeListener { view, year, month, dayOfMonth ->
+            dateString = dayOfMonth.toString() + "/" + (month + 1) + "/" + year
+        }
+git
         button_cancel.setOnClickListener{_ -> finish() }
-        button_save.setOnClickListener{_ ->
-            val e = Event(date = calendar.date.toString(),
-            category = Category.fromId(spin_cat.selectedItemId.toInt()),
+        button_save.setOnClickListener{view ->
+
+            val e = Event(date = dateString,
+            category = spin_cat.selectedItem.toString(),
                     objective = tp_timepicker.hour.toString() + ":"+ tp_timepicker.minute,
                     description = editText.text.toString(),
                     realtime = null)
             AsyncInsert().execute(e)
-            Log.d("EVENT TEST", e.toString())
+            FancyToast.makeText(view.context,
+                    "Item added successfully",
+                    Snackbar.LENGTH_LONG,
+                    FancyToast.SUCCESS,
+                    false).show()
             finish()
         }
     }

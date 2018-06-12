@@ -6,23 +6,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!--android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar_1"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:layout_scrollFlags="enterAlways"
-            android:gravity="start"
-            app:title="@string/app_name"
-            app:popupTheme="@style/AppTheme.PopupOverlay"/>
-    </android.support.design.widget.AppBarLayout-->
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
