@@ -3,9 +3,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 
 import com.example.juandavid.timegram.R
+import com.example.juandavid.timegram.pojo.Event
 
 /**
  * Provide views to RecyclerView with data from dataSet.
@@ -14,19 +16,28 @@ import com.example.juandavid.timegram.R
  *
  * @param dataSet String[] containing the data to populate views to be used by RecyclerView.
  */
-class CustomAdapter(private val dataSet: Array<String>) :
+class CustomAdapter(private val dataSet: List<Event>) :
         RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
 
     /**
      * Provide a reference to the type of views that you are using (custom ViewHolder)
      */
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        val textView: TextView
+        val tvDate: TextView
+        val tvObjective: TextView
+        val tvDescr: TextView
+        val tvCat: TextView
+        val imgView: ImageView
 
         init {
             // Define click listener for the ViewHolder's View.
             v.setOnClickListener { Log.d(TAG, "Element $adapterPosition clicked.") }
-            textView = v.findViewById(R.id.mtv)
+            tvDate = v.findViewById(R.id.mtv)
+            tvObjective = v.findViewById(R.id.title)
+            tvDescr = v.findViewById(R.id.descr)
+            tvCat = v.findViewById(R.id.cat)
+            imgView = v.findViewById(R.id.img)
+
         }
     }
 
@@ -45,7 +56,21 @@ class CustomAdapter(private val dataSet: Array<String>) :
 
         // Get element from your dataset at this position and replace the contents of the view
         // with that element
-        viewHolder.textView.text = dataSet[position]
+        viewHolder.tvDate.text = dataSet[position].date
+        viewHolder.tvObjective.text = dataSet[position].objective
+        viewHolder.tvDescr.text = dataSet[position].description
+        viewHolder.tvCat.text = dataSet[position].category
+        //viewHolder.imgView.setImageResource(R.drawable.ic_people_black_24dp)
+        viewHolder.imgView.setImageResource( when(dataSet[position].category){
+            "Personal" -> R.drawable.ic_person_black_24dp
+            "Family" -> R.drawable.ic_wc_black_24dp
+            "Work" -> R.drawable.ic_business_center_black_24dp
+            "Work2" -> R.drawable.ic_drive_eta_black_24dp
+            "Friends" -> R.drawable.ic_people_black_24dp
+            "Health" -> R.drawable.ic_healing_black_24dp
+            "Dentist" -> R.drawable.ic_insert_emoticon_black_24dp
+            else -> R.drawable.ic_person_black_24dp
+        })
     }
 
     // Return the size of your dataset (invoked by the layout manager)

@@ -1,3 +1,4 @@
+import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
@@ -7,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.juandavid.timegram.R
+import com.example.juandavid.timegram.database.AppDatabase
+import com.example.juandavid.timegram.pojo.Event
 
 /**
  * Demonstrates the use of [RecyclerView] with a [LinearLayoutManager] and a
@@ -17,7 +20,7 @@ class RecyclerViewFragment : Fragment() {
     private lateinit var currentLayoutManagerType: LayoutManagerType
     private lateinit var recyclerView: RecyclerView
     private lateinit var layoutManager: RecyclerView.LayoutManager
-    private lateinit var dataset: Array<String>
+    private lateinit var dataset: List<Event>
 
     enum class LayoutManagerType { GRID_LAYOUT_MANAGER, LINEAR_LAYOUT_MANAGER }
 
@@ -103,7 +106,14 @@ class RecyclerViewFragment : Fragment() {
      * from a local content provider or remote server.
      */
     private fun initDataset() {
-        dataset = Array(DATASET_COUNT, {i -> "This is element # $i"})
+        AsyncRetrieve().execute()
+    }
+
+    private inner class AsyncRetrieve : AsyncTask<Void, Void, Int>() {
+        override fun doInBackground(vararg params: Void): Int? {
+            dataset = AppDatabase.getInstance(context).eventDao().all
+            return 0
+        }
     }
 
     companion object {

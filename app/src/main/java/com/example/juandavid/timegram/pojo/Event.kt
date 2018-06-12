@@ -13,7 +13,4 @@ data class Event constructor(var date:String,
                              var realtime:String?){
     @PrimaryKey(autoGenerate = true)
     var id:Int=0
-
-    @Ignore
-    var cat:Category=Category.fromString(category)
 }
