@@ -2,14 +2,13 @@ package com.example.juandavid.timegram.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import com.example.juandavid.timegram.R
-import com.shashank.sony.fancytoastlib.FancyToast
-
 import kotlinx.android.synthetic.main.activity_main.*
+
+import RecyclerViewFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,6 +16,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+
+        val transaction = supportFragmentManager.beginTransaction()
+        val fragment = RecyclerViewFragment()
+        transaction.replace(R.id.sample_content_fragment, fragment)
+        transaction.commit()
 
         fab.setOnClickListener { _ ->
             startActivity(Intent(this, EventActivity::class.java))
