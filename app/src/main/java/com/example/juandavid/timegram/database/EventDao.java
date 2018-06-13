@@ -25,4 +25,7 @@ public interface EventDao {
 
     @Insert
     void insert(Event item);
+
+    @Query("DELETE FROM EVENTS WHERE id = :id")
+    void deleteFromId(int id);
 }

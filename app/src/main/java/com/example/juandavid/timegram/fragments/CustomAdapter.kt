@@ -1,3 +1,4 @@
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.content.ContextCompat.startActivity
@@ -12,6 +13,8 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.juandavid.timegram.R
 import com.example.juandavid.timegram.activities.DetailActivity
+import com.example.juandavid.timegram.activities.MainActivity
+import com.example.juandavid.timegram.fragments.MessageSelectedDialog
 import com.example.juandavid.timegram.pojo.Event
 import com.shashank.sony.fancytoastlib.FancyToast
 
@@ -23,13 +26,13 @@ import com.shashank.sony.fancytoastlib.FancyToast
  *
  * @param dataSet String[] containing the data to populate views to be used by RecyclerView.
  */
-class CustomAdapter(private val dataSet: MutableList<Event>) :
+class CustomAdapter(private val dataSet: MutableList<Event>, context:RecyclerViewFragment.OnListFragmentInteractionListener) :
         RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
 
     /**
      * Provide a reference to the type of views that you are using (custom ViewHolder)
      */
-    class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
+    class ViewHolder(v: View, c: RecyclerViewFragment.OnListFragmentInteractionListener) : RecyclerView.ViewHolder(v) {
         val tvDate: TextView
         val tvObjective: TextView
         val tvDescr: TextView
@@ -42,10 +45,19 @@ class CustomAdapter(private val dataSet: MutableList<Event>) :
                     Toast.LENGTH_SHORT,
                     FancyToast.INFO,
                     false).show()
-                val intent = Intent(v.context, DetailActivity::class.java)
+                val intent = Intent(c as Context, DetailActivity::class.java)
                 intent.putExtra("POSITION", adapterPosition)
                 startActivity(v.context, intent,null)
 
+            }
+
+            v.findViewById<CardView>(R.id.card).setOnLongClickListener{
+                val args = Bundle()
+                args.putInt("ITEM_ID", RecyclerViewFragment.adapter.getItem(adapterPosition).id)
+                val dialog = MessageSelectedDialog()
+                dialog.arguments = args
+                dialog.show((c as MainActivity).supportFragmentManager, "ActionMessageItem")
+                true
             }
             tvDate = v.findViewById(R.id.mtv)
             tvObjective = v.findViewById(R.id.title)
@@ -77,7 +89,7 @@ class CustomAdapter(private val dataSet: MutableList<Event>) :
         val v = LayoutInflater.from(viewGroup.context)
                 .inflate(R.layout.text_row_item, viewGroup, false)
 
-        return ViewHolder(v)
+        return ViewHolder(v, viewGroup.context as RecyclerViewFragment.OnListFragmentInteractionListener)
     }
 
     // Replace the contents of a view (invoked by the layout manager)

@@ -9,10 +9,10 @@ import com.example.juandavid.timegram.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 import RecyclerViewFragment
+import com.example.juandavid.timegram.pojo.Event
 import kotlinx.android.synthetic.main.recycler_view_frag.*
 
-class MainActivity : AppCompatActivity() {
-
+class MainActivity : AppCompatActivity(), RecyclerViewFragment.OnListFragmentInteractionListener {
     val fragment = RecyclerViewFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,5 +52,9 @@ class MainActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
 
         }
+    }
+
+    override fun onListFragmentInteraction(item: Event) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

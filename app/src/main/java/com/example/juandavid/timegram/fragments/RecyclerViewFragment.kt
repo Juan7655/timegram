@@ -1,3 +1,4 @@
+import android.content.Context
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -38,7 +39,7 @@ class RecyclerViewFragment : Fragment() {
                 container, false).apply { tag = TAG}
 
         recyclerView = rootView.findViewById(R.id.recyclerView)
-        adapter = CustomAdapter(dataset)
+        adapter = CustomAdapter(dataset, context as OnListFragmentInteractionListener)
         // LinearLayoutManager is used here, this will layout the elements in a similar fashion
         // to the way ListView would layout elements. The RecyclerView.LayoutManager defines how
         // elements are laid out.
@@ -92,6 +93,11 @@ class RecyclerViewFragment : Fragment() {
 
     }
 
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+
+    }
+
     override fun onSaveInstanceState(savedInstanceState: Bundle) {
 
         // Save currently selected layout manager.
@@ -101,6 +107,10 @@ class RecyclerViewFragment : Fragment() {
 
     fun initDataset() {
         AsyncRetrieve().execute()
+    }
+
+    interface OnListFragmentInteractionListener {
+        fun onListFragmentInteraction(item: Event)
     }
 
     private inner class AsyncRetrieve : AsyncTask<Void, Void, Int>() {
