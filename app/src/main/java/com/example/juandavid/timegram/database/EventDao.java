@@ -3,6 +3,7 @@ package com.example.juandavid.timegram.database;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
 
 import com.example.juandavid.timegram.pojo.Event;
 
@@ -16,9 +17,12 @@ public interface EventDao {
     @Query("SELECT ID, DATE, OBJECTIVE, REALTIME, DESCRIPTION, CATEGORY FROM EVENTS")
     List<Event> getAll();
 
+    @Query("SELECT ID, DATE, OBJECTIVE, REALTIME, DESCRIPTION, CATEGORY FROM EVENTS WHERE REALTIME IS NULL")
+    List<Event> getComingAppointments();
+
+    @Update
+    void update(Event item);
+
     @Insert
     void insert(Event item);
-
-    @Query("DELETE FROM EVENTS WHERE ID = :id")
-    void deleteFromId(int id);
 }

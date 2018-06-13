@@ -1,3 +1,6 @@
+import android.content.Intent
+import android.os.Bundle
+import android.support.v4.content.ContextCompat.startActivity
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -8,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.example.juandavid.timegram.R
+import com.example.juandavid.timegram.activities.DetailActivity
 import com.example.juandavid.timegram.pojo.Event
 import com.shashank.sony.fancytoastlib.FancyToast
 
@@ -37,7 +41,12 @@ class CustomAdapter(private val dataSet: MutableList<Event>) :
                     "Element $adapterPosition clicked.",
                     Toast.LENGTH_SHORT,
                     FancyToast.INFO,
-                    false).show() }
+                    false).show()
+                val intent = Intent(v.context, DetailActivity::class.java)
+                intent.putExtra("POSITION", adapterPosition)
+                startActivity(v.context, intent,null)
+
+            }
             tvDate = v.findViewById(R.id.mtv)
             tvObjective = v.findViewById(R.id.title)
             tvDescr = v.findViewById(R.id.descr)
@@ -50,6 +59,10 @@ class CustomAdapter(private val dataSet: MutableList<Event>) :
     fun insertItem(item: Event) {
         dataSet.add(0, item)
         notifyItemInserted(0)
+    }
+
+    fun getItem(id: Int):Event{
+        return dataSet[id]
     }
 
     fun deleteItem(id: Int) {
@@ -78,7 +91,7 @@ class CustomAdapter(private val dataSet: MutableList<Event>) :
         viewHolder.tvDescr.text = dataSet[position].description
         viewHolder.tvCat.text = dataSet[position].category
         //viewHolder.imgView.setImageResource(R.drawable.ic_people_black_24dp)
-        viewHolder.imgView.setImageResource( when(dataSet[position].category){
+        viewHolder.imgView.setImageResource(when(dataSet[position].category){
             "Personal" -> R.drawable.ic_person_black_24dp
             "Family" -> R.drawable.ic_wc_black_24dp
             "Work" -> R.drawable.ic_business_center_black_24dp

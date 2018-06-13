@@ -17,4 +17,5 @@
         <item>Health</item>
         <item>Dentist</item>
     </array>
+    <string name="title_activity_detail">DetailActivity</string>
 </resources>

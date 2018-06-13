@@ -105,7 +105,7 @@ class RecyclerViewFragment : Fragment() {
 
     private inner class AsyncRetrieve : AsyncTask<Void, Void, Int>() {
         override fun doInBackground(vararg params: Void): Int? {
-            dataset = AppDatabase.getInstance(context).eventDao().all
+            dataset = AppDatabase.getInstance(context).eventDao().comingAppointments
             return 0
         }
     }
