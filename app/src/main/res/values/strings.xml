@@ -18,4 +18,5 @@
         <item>Dentist</item>
     </array>
     <string name="title_activity_detail">DetailActivity</string>
+    <string name="arrival_time">Arrival time</string>
 </resources>

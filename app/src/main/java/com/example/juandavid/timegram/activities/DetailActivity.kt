@@ -11,6 +11,7 @@ import com.example.juandavid.timegram.pojo.Event
 import com.shashank.sony.fancytoastlib.FancyToast
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.content_detail.*
+import java.lang.Integer.parseInt
 
 class DetailActivity : AppCompatActivity() {
 
@@ -21,6 +22,9 @@ class DetailActivity : AppCompatActivity() {
 
         val pos = intent.getIntExtra("POSITION", 0)
         val e = RecyclerViewFragment.adapter.getItem(pos)
+        val tempTime = e.objective.split(":")
+        detail_time.hour = parseInt(tempTime[0])
+        detail_time.minute = parseInt(tempTime[1])
 
         detail_date.text = e.date
         detail_title.text = e.objective
@@ -35,9 +39,10 @@ class DetailActivity : AppCompatActivity() {
             "Dentist" -> R.drawable.ic_insert_emoticon_black_24dp
             else -> R.drawable.ic_person_black_24dp
         })
-        e.objective = detail_time.hour.toString() + ":"+ detail_time.minute
 
         detail_fab.setOnClickListener { view ->
+            e.realtime = detail_time.hour.toString() + ":"+ detail_time.minute
+
             AsyncUpdate().execute(e)
             FancyToast.makeText(view.context,
                     "Item updated",
