@@ -9,6 +9,7 @@ import com.example.juandavid.timegram.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 import RecyclerViewFragment
+import kotlinx.android.synthetic.main.recycler_view_frag.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,6 +32,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         fragment.initDataset()
+        fragment.recyclerView.adapter.notifyDataSetChanged()
         super.onResume()
 
     }

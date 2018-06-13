@@ -11,6 +11,7 @@ import com.example.juandavid.timegram.R
 import com.example.juandavid.timegram.pojo.Event
 import com.shashank.sony.fancytoastlib.FancyToast
 
+
 /**
  * Provide views to RecyclerView with data from dataSet.
  *
@@ -18,7 +19,7 @@ import com.shashank.sony.fancytoastlib.FancyToast
  *
  * @param dataSet String[] containing the data to populate views to be used by RecyclerView.
  */
-class CustomAdapter(private val dataSet: List<Event>) :
+class CustomAdapter(private val dataSet: MutableList<Event>) :
         RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
 
     /**
@@ -44,6 +45,17 @@ class CustomAdapter(private val dataSet: List<Event>) :
             imgView = v.findViewById(R.id.img)
 
         }
+    }
+
+    fun insertItem(item: Event) {
+        dataSet.add(0, item)
+        notifyItemInserted(0)
+    }
+
+    fun deleteItem(id: Int) {
+        dataSet.removeAt(id)
+        notifyItemRemoved(id)
+        notifyItemRangeChanged(id, itemCount)
     }
 
     // Create new views (invoked by the layout manager)

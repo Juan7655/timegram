@@ -22,7 +22,7 @@ class EventActivity : AppCompatActivity() {
 
         var dateString = SimpleDateFormat("dd/MM/yyyy").format(Date(calendar.date))
 
-        calendar.setOnDateChangeListener { view, year, month, dayOfMonth ->
+        calendar.setOnDateChangeListener { _, year, month, dayOfMonth ->
             dateString = dayOfMonth.toString() + "/" + (month + 1) + "/" + year
         }
 
@@ -35,6 +35,7 @@ class EventActivity : AppCompatActivity() {
                     description = editText.text.toString(),
                     realtime = null)
             AsyncInsert().execute(e)
+            RecyclerViewFragment.adapter.insertItem(e)
             FancyToast.makeText(view.context,
                     "Item added successfully",
                     Snackbar.LENGTH_LONG,

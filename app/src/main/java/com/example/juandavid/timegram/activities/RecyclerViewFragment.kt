@@ -20,7 +20,8 @@ class RecyclerViewFragment : Fragment() {
     private lateinit var currentLayoutManagerType: LayoutManagerType
     private lateinit var recyclerView: RecyclerView
     private lateinit var layoutManager: RecyclerView.LayoutManager
-    private lateinit var dataset: List<Event>
+    lateinit var dataset: MutableList<Event>
+
 
     enum class LayoutManagerType { GRID_LAYOUT_MANAGER, LINEAR_LAYOUT_MANAGER }
 
@@ -37,7 +38,7 @@ class RecyclerViewFragment : Fragment() {
                 container, false).apply { tag = TAG}
 
         recyclerView = rootView.findViewById(R.id.recyclerView)
-
+        adapter = CustomAdapter(dataset)
         // LinearLayoutManager is used here, this will layout the elements in a similar fashion
         // to the way ListView would layout elements. The RecyclerView.LayoutManager defines how
         // elements are laid out.
@@ -53,8 +54,7 @@ class RecyclerViewFragment : Fragment() {
         setRecyclerViewLayoutManager(currentLayoutManagerType)
 
         // Set CustomAdapter as the adapter for RecyclerView.
-        recyclerView.adapter = CustomAdapter(dataset)
-
+        recyclerView.adapter = adapter
         setRecyclerViewLayoutManager(LayoutManagerType.LINEAR_LAYOUT_MANAGER)
 
         return rootView
@@ -111,6 +111,7 @@ class RecyclerViewFragment : Fragment() {
     }
 
     companion object {
+        lateinit var adapter:CustomAdapter
         private val TAG = "RecyclerViewFragment"
         private val KEY_LAYOUT_MANAGER = "layoutManager"
         private val SPAN_COUNT = 2
