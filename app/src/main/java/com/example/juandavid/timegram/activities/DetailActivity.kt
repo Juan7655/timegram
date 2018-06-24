@@ -69,7 +69,7 @@ class DetailActivity : AppCompatActivity() {
             val database = FirebaseDatabase.getInstance().getReference("TIMEGRAM_EVENTS")
             val list = AppDatabase.getInstance(baseContext).eventDao().doneAppointments
             for (i in list)
-                database.child(i.id.toString()).setValue(i)
+                database.child(i.id.toString() + "-").setValue(i)
             return 0
         }
     }
