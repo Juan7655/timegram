@@ -13,7 +13,7 @@ import com.example.juandavid.timegram.pojo.Event
 import kotlinx.android.synthetic.main.recycler_view_frag.*
 
 class MainActivity : AppCompatActivity(), RecyclerViewFragment.OnListFragmentInteractionListener {
-    val fragment = RecyclerViewFragment()
+    private val fragment = RecyclerViewFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +48,10 @@ class MainActivity : AppCompatActivity(), RecyclerViewFragment.OnListFragmentInt
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.id.action_settings -> true
+            R.id.action_settings -> {
+                startActivity(Intent(this, AnalyticsActivity::class.java))
+                true
+            }
             else -> super.onOptionsItemSelected(item)
 
         }
