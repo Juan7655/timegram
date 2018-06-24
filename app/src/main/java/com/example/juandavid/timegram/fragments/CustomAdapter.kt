@@ -4,19 +4,16 @@ import android.os.Bundle
 import android.support.v4.content.ContextCompat.startActivity
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import com.example.juandavid.timegram.R
 import com.example.juandavid.timegram.activities.DetailActivity
 import com.example.juandavid.timegram.activities.MainActivity
 import com.example.juandavid.timegram.fragments.MessageSelectedDialog
 import com.example.juandavid.timegram.pojo.Event
-import com.shashank.sony.fancytoastlib.FancyToast
 
 
 /**
@@ -26,7 +23,7 @@ import com.shashank.sony.fancytoastlib.FancyToast
  *
  * @param dataSet String[] containing the data to populate views to be used by RecyclerView.
  */
-class CustomAdapter(private val dataSet: MutableList<Event>, context:RecyclerViewFragment.OnListFragmentInteractionListener) :
+class CustomAdapter(private val dataSet: MutableList<Event>) :
         RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
 
     /**
@@ -40,11 +37,7 @@ class CustomAdapter(private val dataSet: MutableList<Event>, context:RecyclerVie
         val imgView: ImageView
 
         init {
-            v.findViewById<CardView>(R.id.card).setOnClickListener { FancyToast.makeText(v.context,
-                    "Element $adapterPosition clicked.",
-                    Toast.LENGTH_SHORT,
-                    FancyToast.INFO,
-                    false).show()
+            v.findViewById<CardView>(R.id.card).setOnClickListener {
                 val intent = Intent(c as Context, DetailActivity::class.java)
                 intent.putExtra("POSITION", adapterPosition)
                 startActivity(v.context, intent,null)
@@ -54,6 +47,7 @@ class CustomAdapter(private val dataSet: MutableList<Event>, context:RecyclerVie
             v.findViewById<CardView>(R.id.card).setOnLongClickListener{
                 val args = Bundle()
                 args.putInt("ITEM_ID", RecyclerViewFragment.adapter.getItem(adapterPosition).id)
+                args.putInt("ITEM_POSITION", adapterPosition)
                 val dialog = MessageSelectedDialog()
                 dialog.arguments = args
                 dialog.show((c as MainActivity).supportFragmentManager, "ActionMessageItem")
@@ -69,8 +63,8 @@ class CustomAdapter(private val dataSet: MutableList<Event>, context:RecyclerVie
     }
 
     fun insertItem(item: Event) {
-        dataSet.add(0, item)
-        notifyItemInserted(0)
+        dataSet.add(itemCount, item)
+        notifyItemInserted(itemCount - 1)
     }
 
     fun getItem(id: Int):Event{
@@ -94,9 +88,7 @@ class CustomAdapter(private val dataSet: MutableList<Event>, context:RecyclerVie
 
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        Log.d(TAG, "Element $position set.")
-
-        // Get element from your dataset at this position and replace the contents of the view
+         // Get element from your dataset at this position and replace the contents of the view
         // with that element
         viewHolder.tvDate.text = dataSet[position].date
         viewHolder.tvObjective.text = dataSet[position].objective
@@ -117,8 +109,4 @@ class CustomAdapter(private val dataSet: MutableList<Event>, context:RecyclerVie
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
-
-    companion object {
-        private val TAG = "CustomAdapter"
-    }
 }

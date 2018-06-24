@@ -19,14 +19,15 @@ class MessageSelectedDialog : DialogFragment() {
         // Use the Builder class for convenient dialog construction
         val builder = AlertDialog.Builder(activity)
         builder.setMessage(R.string.msg_dialog_title)
-                .setNeutralButton(R.string.msg_dialog_cancel, { _, _ ->
+                .setNeutralButton(R.string.msg_dialog_cancel) { _, _ ->
                     //No action required
-                })
-                .setNegativeButton(R.string.msg_dialog_delete, { _, _ ->
+                }
+                .setNegativeButton(R.string.msg_dialog_delete) { _, _ ->
                     val idItem = arguments!!.getInt("ITEM_ID")
+                    val posItem = arguments!!.getInt("ITEM_POSITION")
                     AsyncDelete().execute(idItem)
-                    RecyclerViewFragment.adapter.deleteItem(idItem)
-                })
+                    RecyclerViewFragment.adapter.deleteItem(posItem)
+                }
         // Create the AlertDialog object and return it
         return builder.create()
     }

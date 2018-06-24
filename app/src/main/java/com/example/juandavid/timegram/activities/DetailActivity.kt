@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import com.example.juandavid.timegram.R
 import com.example.juandavid.timegram.database.AppDatabase
 import com.example.juandavid.timegram.pojo.Event
+import com.google.firebase.database.FirebaseDatabase
 import com.shashank.sony.fancytoastlib.FancyToast
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.content_detail.*
@@ -57,6 +58,11 @@ class DetailActivity : AppCompatActivity() {
     private inner class AsyncUpdate : AsyncTask<Event, Void, Int>() {
         override fun doInBackground(vararg params: Event): Int? {
             AppDatabase.getInstance(baseContext).eventDao().update(params[0])
+
+            val database = FirebaseDatabase.getInstance().getReference("TIMEGRAM_EVENTS")
+            val list = AppDatabase.getInstance(baseContext).eventDao().doneAppointments
+            for (i in list)
+                database.child(i.id.toString()).setValue(i)
             return 0
         }
     }

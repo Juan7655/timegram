@@ -1,6 +1,7 @@
 package com.example.juandavid.timegram.activities
 
 
+import RecyclerViewFragment
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -12,7 +13,6 @@ import com.shashank.sony.fancytoastlib.FancyToast
 import kotlinx.android.synthetic.main.activity_event.*
 import java.text.SimpleDateFormat
 import java.util.*
-
 
 class EventActivity : AppCompatActivity() {
 
@@ -29,9 +29,10 @@ class EventActivity : AppCompatActivity() {
         button_cancel.setOnClickListener{_ -> finish() }
         button_save.setOnClickListener{view ->
 
+            val minute = tp_timepicker.minute.toString() + if (tp_timepicker.minute < 10) "0" else ""
             val e = Event(date = dateString,
             category = spin_cat.selectedItem.toString(),
-                    objective = tp_timepicker.hour.toString() + ":"+ tp_timepicker.minute,
+                    objective = tp_timepicker.hour.toString() + ":"+ minute,
                     description = editText.text.toString(),
                     realtime = null)
             AsyncInsert().execute(e)

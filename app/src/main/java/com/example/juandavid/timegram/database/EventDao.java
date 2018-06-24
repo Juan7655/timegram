@@ -20,6 +20,9 @@ public interface EventDao {
     @Query("SELECT ID, DATE, OBJECTIVE, REALTIME, DESCRIPTION, CATEGORY FROM EVENTS WHERE REALTIME IS NULL")
     List<Event> getComingAppointments();
 
+    @Query("SELECT ID, DATE, OBJECTIVE, REALTIME, DESCRIPTION, CATEGORY FROM EVENTS WHERE REALTIME IS NOT NULL")
+    List<Event> getDoneAppointments();
+
     @Update
     void update(Event item);
 
