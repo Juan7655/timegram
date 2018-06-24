@@ -42,7 +42,8 @@ class DetailActivity : AppCompatActivity() {
         })
 
         detail_fab.setOnClickListener { view ->
-            e.realtime = detail_time.hour.toString() + ":"+ detail_time.minute
+            val minute = (if (detail_time.minute < 10) "0" else "") + detail_time.minute.toString()
+            e.realtime = detail_time.hour.toString() + ":"+ minute
 
             AsyncUpdate().execute(e)
             FancyToast.makeText(view.context,
@@ -50,6 +51,7 @@ class DetailActivity : AppCompatActivity() {
                     Snackbar.LENGTH_LONG,
                     FancyToast.INFO,
                     false).show()
+            RecyclerViewFragment.adapter.deleteItem(pos)
             finish()
         }
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -57,7 +59,12 @@ class DetailActivity : AppCompatActivity() {
 
     private inner class AsyncUpdate : AsyncTask<Event, Void, Int>() {
         override fun doInBackground(vararg params: Event): Int? {
-            AppDatabase.getInstance(baseContext).eventDao().update(params[0])
+            AppDatabase.getInstance(baseContext).eventDao()
+                    .update(params[0].date,
+                            params[0].objective,
+                            params[0].description,
+                            params[0].category,
+                            params[0].realtime)
 
             val database = FirebaseDatabase.getInstance().getReference("TIMEGRAM_EVENTS")
             val list = AppDatabase.getInstance(baseContext).eventDao().doneAppointments

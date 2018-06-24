@@ -67,14 +67,14 @@ class CustomAdapter(private val dataSet: MutableList<Event>) :
         notifyItemInserted(itemCount - 1)
     }
 
-    fun getItem(id: Int):Event{
-        return dataSet[id]
+    fun getItem(position: Int):Event{
+        return dataSet[position]
     }
 
-    fun deleteItem(id: Int) {
-        dataSet.removeAt(id)
-        notifyItemRemoved(id)
-        notifyItemRangeChanged(id, itemCount)
+    fun deleteItem(position: Int) {
+        dataSet.removeAt(position)
+        notifyItemRemoved(position)
+        notifyItemRangeChanged(position, itemCount)
     }
 
     // Create new views (invoked by the layout manager)
@@ -94,7 +94,6 @@ class CustomAdapter(private val dataSet: MutableList<Event>) :
         viewHolder.tvObjective.text = dataSet[position].objective
         viewHolder.tvDescr.text = dataSet[position].description
         viewHolder.tvCat.text = dataSet[position].category
-        //viewHolder.imgView.setImageResource(R.drawable.ic_people_black_24dp)
         viewHolder.imgView.setImageResource(when(dataSet[position].category){
             "Personal" -> R.drawable.ic_person_black_24dp
             "Family" -> R.drawable.ic_wc_black_24dp

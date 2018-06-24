@@ -29,7 +29,7 @@ class EventActivity : AppCompatActivity() {
         button_cancel.setOnClickListener{_ -> finish() }
         button_save.setOnClickListener{view ->
 
-            val minute = tp_timepicker.minute.toString() + if (tp_timepicker.minute < 10) "0" else ""
+            val minute = (if (tp_timepicker.minute < 10) "0" else "") + tp_timepicker.minute
             val e = Event(date = dateString,
             category = spin_cat.selectedItem.toString(),
                     objective = tp_timepicker.hour.toString() + ":"+ minute,
