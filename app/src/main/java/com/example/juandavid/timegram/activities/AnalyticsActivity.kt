@@ -4,8 +4,11 @@ import android.app.ProgressDialog
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.View
+import android.widget.AdapterView
 import com.example.juandavid.timegram.R
 import com.example.juandavid.timegram.database.AppDatabase
+import com.example.juandavid.timegram.pojo.Category
 import com.example.juandavid.timegram.pojo.Event
 import com.jjoe64.graphview.series.BarGraphSeries
 import com.jjoe64.graphview.series.DataPoint
@@ -23,32 +26,46 @@ class AnalyticsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_analytics)
         AsyncRetrieve(this).execute()
+        analytics_spinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                getMetrics(position)
+            }
+
+        }
     }
 
-    fun getMetrics(){
+    fun getMetrics(id : Int){
         var sumMin = 0.0
+        var count = 0
         val map: HashMap<Int, Int> = HashMap()
         for (i in lista) {
-            val dateFormat = SimpleDateFormat("HH:mm")
-            try {
-                val date = dateFormat.parse(i.objective).time
-                val date2 = dateFormat.parse(i.realtime).time
-                val diff = date - date2
-                val mins = diff / (1000 * 60)
-                sumMin += mins
-                map[mins.toInt()] = (map[mins.toInt()] ?:0) + 1
-            } catch (e: ParseException) {
+            if(id==0 || Category.fromId(id - 1).text == i.category) {
+                val dateFormat = SimpleDateFormat("HH:mm")
+                try {
+                    val date = dateFormat.parse(i.objective).time
+                    val date2 = dateFormat.parse(i.realtime).time
+                    val mins = (date - date2) / (1000 * 60)
+                    sumMin += mins
+                    count++
+                    map[mins.toInt()] = (map[mins.toInt()] ?: 0) + 1
+                } catch (e: ParseException) {
+                }
             }
         }
 
-        val average = sumMin / lista.size
-        time_text.text = average.toString().substring(0, 4)
+        val average = sumMin / count
+        val mText = average.toString()
+        time_text.text = if (mText.length > 4) mText.substring(0, 4) else mText
 
         val arr = ArrayList<DataPoint>()
         var minX = 0.0
         var maxX = 0.0
 
-            for (i in map) {
+            for (i in map.toSortedMap()) {
                 arr.add(DataPoint(i.key.toDouble(), i.value.toDouble()))
                 minX = min(minX, i.key.toDouble())
                 maxX = max(maxX, i.key.toDouble())
@@ -78,7 +95,7 @@ class AnalyticsActivity : AppCompatActivity() {
 
         override fun doInBackground(vararg params: Void): Int? {
             lista = AppDatabase.getInstance(baseContext).eventDao().doneAppointments
-            getMetrics()
+            getMetrics(0)
             return 0
         }
 

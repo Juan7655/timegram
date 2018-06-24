@@ -21,6 +21,18 @@
         <item>Dentist</item>
     </array>
 
+    <!-- Categories with none selected-->
+    <array name="appointment_category_with_null">
+        <item>All categories</item>
+        <item>Personal</item>
+        <item>Family</item>
+        <item>Work</item>
+        <item>Work2</item>
+        <item>Friends</item>
+        <item>Health</item>
+        <item>Dentist</item>
+    </array>
+
     <string name="title_activity_detail">DetailActivity</string>
     <string name="arrival_time">Arrival time</string>
     <string name="timediff_text">Average arriving time difference</string>
