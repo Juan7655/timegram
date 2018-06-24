@@ -30,6 +30,7 @@ class DetailActivity : AppCompatActivity() {
         detail_date.text = e.date
         detail_title.text = e.objective
         detail_descr.text = e.description
+        detail_cat.text = e.category
         detail_img.setImageResource(when(e.category){
             "Personal" -> R.drawable.ic_person_black_24dp
             "Family" -> R.drawable.ic_wc_black_24dp
